@@ -29,6 +29,7 @@ namespace Final_Project
                 sqlDb = new SqlConnection(cntStr);
                 sqlDb.Open();
                 btnRead.Enabled = true;
+                btnLogIn.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -62,11 +63,25 @@ namespace Final_Project
             sqlDr.Close();
             btnRead.Enabled = false;
         }
+        private void btnLogIn_Click(object sender, EventArgs e)
+        {
+            // 以對話方塊方式開啟 Form2
+            using (var loginForm = new Form2())
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    // 從 Form2 拿回正確的 Username
+                    lblWelcome.Text = $"歡迎 {loginForm.Username}!";
+                }
+            }
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (sqlDb != null)
                 sqlDb.Close();  // 關閉資料庫連線
         }
+
+  
     }
 }
