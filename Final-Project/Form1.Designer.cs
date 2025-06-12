@@ -28,41 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvBooks = new System.Windows.Forms.DataGridView();
-            this.btnRead = new System.Windows.Forms.Button();
-            this.排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogIn = new System.Windows.Forms.Button();
             this.lblWelcome = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.排序ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AZToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZAToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnBorrowList = new System.Windows.Forms.Button();
+            this.lvwBooks = new System.Windows.Forms.ListView();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dgvBooks
-            // 
-            this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBooks.Location = new System.Drawing.Point(12, 12);
-            this.dgvBooks.Name = "dgvBooks";
-            this.dgvBooks.RowHeadersWidth = 51;
-            this.dgvBooks.RowTemplate.Height = 27;
-            this.dgvBooks.Size = new System.Drawing.Size(445, 426);
-            this.dgvBooks.TabIndex = 0;
-            // 
-            // btnRead
-            // 
-            this.btnRead.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnRead.Location = new System.Drawing.Point(580, 199);
-            this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(129, 67);
-            this.btnRead.TabIndex = 1;
-            this.btnRead.Text = "讀取資料";
-            this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
-            // 
-            // 排序ToolStripMenuItem
-            // 
-            this.排序ToolStripMenuItem.Name = "排序ToolStripMenuItem";
-            this.排序ToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
             // AZToolStripMenuItem
             // 
@@ -77,9 +55,10 @@
             // btnLogIn
             // 
             this.btnLogIn.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnLogIn.Location = new System.Drawing.Point(592, 299);
+            this.btnLogIn.Location = new System.Drawing.Point(749, 228);
+            this.btnLogIn.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogIn.Name = "btnLogIn";
-            this.btnLogIn.Size = new System.Drawing.Size(101, 67);
+            this.btnLogIn.Size = new System.Drawing.Size(76, 54);
             this.btnLogIn.TabIndex = 2;
             this.btnLogIn.Text = "登入";
             this.btnLogIn.UseVisualStyleBackColor = true;
@@ -89,40 +68,111 @@
             // 
             this.lblWelcome.AutoSize = true;
             this.lblWelcome.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblWelcome.Location = new System.Drawing.Point(508, 50);
+            this.lblWelcome.Location = new System.Drawing.Point(747, 29);
+            this.lblWelcome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(109, 29);
+            this.lblWelcome.Size = new System.Drawing.Size(90, 24);
             this.lblWelcome.TabIndex = 4;
             this.lblWelcome.Text = "                ";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBox1,
+            this.排序ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(859, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(12, 20);
+            // 
+            // 排序ToolStripMenuItem
+            // 
+            this.排序ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AZToolStripMenuItem1,
+            this.ZAToolStripMenuItem1});
+            this.排序ToolStripMenuItem.Name = "排序ToolStripMenuItem";
+            this.排序ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.排序ToolStripMenuItem.Text = "排序";
+            // 
+            // AZToolStripMenuItem1
+            // 
+            this.AZToolStripMenuItem1.Checked = true;
+            this.AZToolStripMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AZToolStripMenuItem1.Name = "AZToolStripMenuItem1";
+            this.AZToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.AZToolStripMenuItem1.Text = "A~Z";
+            this.AZToolStripMenuItem1.Click += new System.EventHandler(this.AZToolStripMenuItem1_Click);
+            // 
+            // ZAToolStripMenuItem1
+            // 
+            this.ZAToolStripMenuItem1.Name = "ZAToolStripMenuItem1";
+            this.ZAToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+            this.ZAToolStripMenuItem1.Text = "Z~A";
+            this.ZAToolStripMenuItem1.Click += new System.EventHandler(this.ZAToolStripMenuItem1_Click);
+            // 
+            // btnBorrowList
+            // 
+            this.btnBorrowList.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnBorrowList.Location = new System.Drawing.Point(719, 317);
+            this.btnBorrowList.Name = "btnBorrowList";
+            this.btnBorrowList.Size = new System.Drawing.Size(118, 50);
+            this.btnBorrowList.TabIndex = 6;
+            this.btnBorrowList.Text = "借書清單";
+            this.btnBorrowList.UseVisualStyleBackColor = true;
+            this.btnBorrowList.Click += new System.EventHandler(this.btnBorrowList_Click);
+            // 
+            // lvwBooks
+            // 
+            this.lvwBooks.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lvwBooks.HideSelection = false;
+            this.lvwBooks.Location = new System.Drawing.Point(25, 82);
+            this.lvwBooks.Name = "lvwBooks";
+            this.lvwBooks.Size = new System.Drawing.Size(648, 417);
+            this.lvwBooks.TabIndex = 7;
+            this.lvwBooks.UseCompatibleStateImageBehavior = false;
+            this.lvwBooks.View = System.Windows.Forms.View.Details;
+            this.lvwBooks.ItemActivate += new System.EventHandler(this.lvwBooks_ItemActivate);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(859, 537);
+            this.Controls.Add(this.lvwBooks);
+            this.Controls.Add(this.btnBorrowList);
             this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.btnLogIn);
-            this.Controls.Add(this.btnRead);
-            this.Controls.Add(this.dgvBooks);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Text = "圖書管理系統";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dgvBooks;
-        private System.Windows.Forms.Button btnRead;
-        private System.Windows.Forms.ToolStripMenuItem 排序ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AZToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ZAToolStripMenuItem;
         private System.Windows.Forms.Button btnLogIn;
         private System.Windows.Forms.Label lblWelcome;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripComboBox1;
+        private System.Windows.Forms.ToolStripMenuItem 排序ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AZToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ZAToolStripMenuItem1;
+        private System.Windows.Forms.Button btnBorrowList;
+        private System.Windows.Forms.ListView lvwBooks;
     }
 }
 

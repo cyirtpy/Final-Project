@@ -13,7 +13,10 @@ namespace Final_Project
 {
     public partial class Form1 : Form
     {
-        SqlConnection sqlDb = null;
+        private readonly string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Database2;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
+        public string CurrentUser { get; private set; }
+
         public Form1()
         {
             InitializeComponent();
@@ -21,48 +24,56 @@ namespace Final_Project
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string cntStr = @"Data Source=(localDB)\MSSQLLocalDB;" +
-                @"AttachDBFilename=|DataDirectory|Database2.mdf;";
-
-            try
-            {
-                sqlDb = new SqlConnection(cntStr);
-                sqlDb.Open();
-                btnRead.Enabled = true;
-                btnLogIn.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            btnLogIn.Enabled = true;
+            btnBorrowList.Enabled = true;
+            LoadBooks(order: "ASC");
+            lvwBooks.Columns.Add("書名", 250);  
+            lvwBooks.Columns.Add("英文書名", 300);  
         }
 
-        private void btnRead_Click(object sender, EventArgs e)
+        private void LoadBooks(string order)
         {
-            string sqlStr = "SELECT b.書名, 英文書名, 作者 FROM Basic b ";
-
-            SqlCommand sqlCmd = new SqlCommand(sqlStr, sqlDb);
-            SqlDataReader sqlDr = sqlCmd.ExecuteReader();
-            int rowIndex = 0;
-
-            dgvBooks.Font = new Font("微軟正黑體", 10);
-
-            for (int i = 0; i < sqlDr.FieldCount; i++)
-                dgvBooks.Columns.Add("column" + (i + 1).ToString(), sqlDr.GetName(i));
-
-            while (sqlDr.Read() != false)
+            // 先取得所有資料到暫存
+            var records = new List<(string Title, string Eng)>();
+            int maxTitle = "書名".Length;
+            int maxEng = "英文書名".Length;
+            using (var conn = new SqlConnection(connString))
+            using (var cmd = new SqlCommand(
+                $"SELECT 書名, 英文書名 FROM Basic ORDER BY 英文書名 {order}", conn))
             {
-                dgvBooks.Rows.Add();
-
-                for (int i = 0; i < sqlDr.FieldCount; i++)
-                    dgvBooks.Rows[rowIndex].Cells[i].Value =
-                        sqlDr.GetValue(i).ToString();
-                rowIndex++;
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var title = reader.GetString(0);
+                        var eng = reader.GetString(1);
+                        records.Add((title, eng));
+                        maxTitle = Math.Max(maxTitle, title.Length);
+                        maxEng = Math.Max(maxEng, eng.Length);
+                    }
+                }
             }
-
-            sqlDr.Close();
-            btnRead.Enabled = false;
+            lvwBooks.Items.Clear();
+            // 資料行
+            foreach (var (Title, Eng) in records)
+                lvwBooks.Items.Add(new ListViewItem(new[] { Title, Eng }));
+        
+    }
+        private void AZToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AZToolStripMenuItem1.Checked = true;
+            ZAToolStripMenuItem1.Checked = false;
+            LoadBooks(order: "ASC");
         }
+
+        private void ZAToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AZToolStripMenuItem1.Checked = false;
+            ZAToolStripMenuItem1.Checked = true;
+            LoadBooks(order: "DESC");
+        }
+
         private void btnLogIn_Click(object sender, EventArgs e)
         {
             // 以對話方塊方式開啟 Form2
@@ -71,17 +82,34 @@ namespace Final_Project
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
                     // 從 Form2 拿回正確的 Username
-                    lblWelcome.Text = $"歡迎 {loginForm.Username}!";
+                    CurrentUser = loginForm.Username;
+                    lblWelcome.Text = $"歡迎 {CurrentUser}!";
+
                 }
             }
         }
+    
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void lvwBooks_ItemActivate(object sender, EventArgs e)
         {
-            if (sqlDb != null)
-                sqlDb.Close();  // 關閉資料庫連線
+            if (lvwBooks.SelectedItems.Count == 0) return;
+            var item = lvwBooks.SelectedItems[0];
+            if (item.Index < 0) return; // 標題或分隔線
+            using (var frm = new Form4(item.SubItems[0].Text, item.SubItems[1].Text, CurrentUser))
+                frm.ShowDialog();
         }
 
-  
+        private void btnBorrowList_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(CurrentUser))
+            {
+                MessageBox.Show("請先登入帳號!");
+                return;
+            }
+            using (var listForm = new Form5(CurrentUser))
+            {
+                listForm.ShowDialog();
+            }
+        }
     }
 }
