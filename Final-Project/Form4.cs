@@ -47,30 +47,54 @@ namespace Final_Project
                     lblISBN1.Text = reader.GetString(3);
                 }
             }
+            if (!string.IsNullOrEmpty(currentUser))
+                ((Form1)Application.OpenForms["Form1"]).CheckHourAlerts();
         }
 
         private void btnBorrow_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(currentUser))
             {
-                MessageBox.Show("請先登入帳號!");
-                return;
-            }
-            // 新增借閱紀錄
-            using (var conn = new SqlConnection(connString))
-            using (var cmd = new SqlCommand(
-                "INSERT INTO BorrowBook (書名, 英文書名, 借閱人) VALUES (@n, @e, @u)", conn))
-            {
-                cmd.Parameters.AddWithValue("@n", bookName);
-                cmd.Parameters.AddWithValue("@e", engName);
-                cmd.Parameters.AddWithValue("@u", currentUser);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
+                if (string.IsNullOrEmpty(currentUser))
+                {
+                    MessageBox.Show("請先登入帳號!");
+                    return;
+                }
+                using (var conn = new SqlConnection(connString))
+                {
+                    conn.Open();
+                    // 檢查借閱狀態
+                    using (var cmdCheck = new SqlCommand(
+                        "SELECT 借閱人 FROM BorrowBook WHERE 書名=@n AND 英文書名=@e", conn))
+                    {
+                        cmdCheck.Parameters.AddWithValue("@n", bookName);
+                        cmdCheck.Parameters.AddWithValue("@e", engName);
+                        var existing = cmdCheck.ExecuteScalar() as string;
+                        if (existing != null)
+                        {
+                            if (existing == currentUser)
+                                MessageBox.Show("你正在借閱該本書!");
+                            else
+                                MessageBox.Show("此書正在被借閱!");
+                            return;
+                        }
+                    }
+                    // 新增借閱記錄: 設定到期時間 = 現在 + 6 天
+                    var endDate = DateTime.Now.AddDays(6);
+                    using (var cmd = new SqlCommand(
+                        "INSERT INTO BorrowBook (書名, 英文書名, 借閱人, 剩餘借閱時間) VALUES (@n, @e, @u, @end)", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@n", bookName);
+                        cmd.Parameters.AddWithValue("@e", engName);
+                        cmd.Parameters.AddWithValue("@u", currentUser);
+                        cmd.Parameters.AddWithValue("@end", endDate);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
 
-            MessageBox.Show("已借書成功!");
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+                MessageBox.Show("已借書成功!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
     }
 }

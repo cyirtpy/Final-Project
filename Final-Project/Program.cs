@@ -11,6 +11,9 @@ namespace Final_Project
         /// <summary>
         /// 應用程式的主要進入點。
         /// </summary>
+                // 全域追蹤已提醒書目
+        public static HashSet<string> AlertedBooks = new HashSet<string>();
+
         [STAThread]
         static void Main()
         {

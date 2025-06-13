@@ -16,6 +16,8 @@ namespace Final_Project
         private readonly string connString =
             @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
         private readonly string currentUser;
+        private HashSet<string> alerted = new HashSet<string>(); // 已提醒一小時清單
+        private System.Windows.Forms.Timer timerBorrow;
         public Form5(string currentUser)
         {
             InitializeComponent();
@@ -27,24 +29,72 @@ namespace Final_Project
             LoadBorrowList();
             lvwBorrowList.Columns.Add("書名", 250);
             lvwBorrowList.Columns.Add("英文書名", 300);
-        }
+            lvwBorrowList.Columns.Add("剩餘借閱時間", 120);
+            timerBorrow = new Timer();
+            timerBorrow.Interval = 60 * 60 * 1000; // 每分鐘檢查一次
+            timerBorrow.Tick += (s, ev) => LoadBorrowList();
+            timerBorrow.Start();
+            if (!string.IsNullOrEmpty(currentUser))
+                ((Form1)Application.OpenForms["Form1"]).CheckHourAlerts();
+        
+    }
+
 
         private void LoadBorrowList()
         {
-            lvwBorrowList.Items.Clear();
-
+            var list = new List<(string Title, string Eng, DateTime End)>();
+            int maxTitle = "書名".Length;
+            int maxEng = "英文書名".Length;
+            int maxTime = "剩餘時間".Length;
             using (var conn = new SqlConnection(connString))
-            using (var cmd = new SqlCommand(
-                "SELECT 書名, 英文書名 FROM BorrowBook WHERE 借閱人=@u", conn))
             {
-                cmd.Parameters.AddWithValue("@u", currentUser);
                 conn.Open();
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (var cmd = new SqlCommand(
+                    "SELECT 書名, 英文書名, 剩餘借閱時間 FROM BorrowBook WHERE 借閱人=@u", conn))
                 {
-                    lvwBorrowList.Items.Add(new ListViewItem(new[] { reader.GetString(0), reader.GetString(1) }));
+                    cmd.Parameters.AddWithValue("@u", currentUser);
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var t = reader.GetString(0);
+                            var eName = reader.GetString(1);
+                            var end = reader.GetDateTime(2);
+                            list.Add((t, eName, end));
+                            maxTitle = Math.Max(maxTitle, t.Length);
+                            maxEng = Math.Max(maxEng, eName.Length);
+                            var rem = end - DateTime.Now;
+                            string txt = rem.TotalSeconds <= 3600 ? rem.ToString(@"hh\:mm\:ss") : $"{(int)rem.TotalDays}天";
+                            maxTime = Math.Max(maxTime, txt.Length);
+                        }
+                    }
                 }
             }
+
+            lvwBorrowList.BeginUpdate();
+            lvwBorrowList.Items.Clear();
+            // 資料行
+            foreach (var (Title, Eng, End) in list)
+            {
+                var rem = End - DateTime.Now;
+                bool isHourAlert = rem.TotalSeconds <= 3600 && rem.TotalSeconds > 0;
+                bool isDayWarning = rem.TotalDays <= 1 && rem.TotalSeconds > 3600;
+                string txt;
+                if (rem.TotalSeconds <= 0) txt = "已逾期";
+                else if (isHourAlert) txt = rem.ToString(@"hh\:mm\:ss");
+                else txt = $"{(int)rem.TotalDays}天";
+
+                var item = new ListViewItem(new[] { Title, Eng, txt });
+                if (isDayWarning || isHourAlert) item.ForeColor = Color.Red;
+                lvwBorrowList.Items.Add(item);
+
+                if (isHourAlert && !alerted.Contains(Title))
+                {
+                    MessageBox.Show($"{Title} 借閱時間剩餘1小時，請盡快還書!");
+                    alerted.Add(Title);
+                }
+            }
+            lvwBorrowList.EndUpdate();
         }
 
         private void lvwBorrowList_ItemActivate(object sender, EventArgs e)

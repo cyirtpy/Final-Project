@@ -36,9 +36,10 @@
             // 
             this.lblBorrowList.AutoSize = true;
             this.lblBorrowList.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblBorrowList.Location = new System.Drawing.Point(36, 30);
+            this.lblBorrowList.Location = new System.Drawing.Point(48, 38);
+            this.lblBorrowList.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBorrowList.Name = "lblBorrowList";
-            this.lblBorrowList.Size = new System.Drawing.Size(134, 31);
+            this.lblBorrowList.Size = new System.Drawing.Size(167, 38);
             this.lblBorrowList.TabIndex = 0;
             this.lblBorrowList.Text = "已借書清單";
             // 
@@ -46,9 +47,10 @@
             // 
             this.lvwBorrowList.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lvwBorrowList.HideSelection = false;
-            this.lvwBorrowList.Location = new System.Drawing.Point(42, 93);
+            this.lvwBorrowList.Location = new System.Drawing.Point(56, 116);
+            this.lvwBorrowList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvwBorrowList.Name = "lvwBorrowList";
-            this.lvwBorrowList.Size = new System.Drawing.Size(538, 283);
+            this.lvwBorrowList.Size = new System.Drawing.Size(888, 353);
             this.lvwBorrowList.TabIndex = 1;
             this.lvwBorrowList.UseCompatibleStateImageBehavior = false;
             this.lvwBorrowList.View = System.Windows.Forms.View.Details;
@@ -56,11 +58,12 @@
             // 
             // Form5
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 562);
             this.Controls.Add(this.lvwBorrowList);
             this.Controls.Add(this.lblBorrowList);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form5";
             this.Text = "借書清單";
             this.Load += new System.EventHandler(this.Form5_Load);

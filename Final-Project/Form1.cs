@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+
 
 namespace Final_Project
 {
@@ -27,12 +29,23 @@ namespace Final_Project
             btnLogIn.Enabled = true;
             btnBorrowList.Enabled = true;
             LoadBooks(order: "ASC");
+            // 設定每分鐘檢查與提醒
+            timerBorrow.Interval = 60 * 1000;
+            timerBorrow.Tick += (s, ev) =>
+            {
+                LoadBooks(CurrentOrder);
+                CheckHourAlerts();
+            };
+            timerBorrow.Start();
+            // 立即檢查一次
+            CheckHourAlerts();
             lvwBooks.Columns.Add("書名", 250);  
             lvwBooks.Columns.Add("英文書名", 300);  
         }
-
+        private string CurrentOrder = "ASC";
         private void LoadBooks(string order)
         {
+            CurrentOrder = order;
             // 先取得所有資料到暫存
             var records = new List<(string Title, string Eng)>();
             int maxTitle = "書名".Length;
@@ -94,7 +107,7 @@ namespace Final_Project
         {
             if (lvwBooks.SelectedItems.Count == 0) return;
             var item = lvwBooks.SelectedItems[0];
-            if (item.Index < 0) return; // 標題或分隔線
+            if (item.Index < 0) return; // 標題
             using (var frm = new Form4(item.SubItems[0].Text, item.SubItems[1].Text, CurrentUser))
                 frm.ShowDialog();
         }
@@ -109,6 +122,33 @@ namespace Final_Project
             using (var listForm = new Form5(CurrentUser))
             {
                 listForm.ShowDialog();
+            }
+        }
+
+        // 檢查剩餘1小時提醒
+        public void CheckHourAlerts()
+        {
+            if (string.IsNullOrEmpty(CurrentUser)) return;
+            using (var conn = new SqlConnection(connString))
+            using (var cmd = new SqlCommand(
+                "SELECT 書名, 剩餘借閱時間 FROM BorrowBook WHERE 借閱人=@u", conn))
+            {
+                cmd.Parameters.AddWithValue("@u", CurrentUser);
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var title = reader.GetString(0);
+                        var end = reader.GetDateTime(1);
+                        var rem = end - DateTime.Now;
+                        if (rem.TotalSeconds <= 3600 && rem.TotalSeconds > 0 && !Program.AlertedBooks.Contains(title))
+                        {
+                            MessageBox.Show($"{title} 借閱時間剩餘1小時，請盡快還書!");
+                            Program.AlertedBooks.Add(title);
+                        }
+                    }
+                }
             }
         }
     }
