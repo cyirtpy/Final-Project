@@ -21,6 +21,7 @@ namespace Final_Project
         {
             InitializeComponent();
             this.AcceptButton = btnLogInAccount;
+            txtPassword.UseSystemPasswordChar = true;
         }
 
 

@@ -19,12 +19,24 @@ namespace Final_Project
             @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Database2;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
         public string CurrentUser { get; private set; }
 
+        // Konami Code 序列
+        private readonly Keys[] konami = new[]
+        {
+        Keys.Up, Keys.Up,
+        Keys.Down, Keys.Down,
+        Keys.Left, Keys.Right,
+        Keys.Left, Keys.Right,
+        Keys.A, Keys.B
+    };
+        private int konamiIndex = 0;
         public Form1()
         {
             InitializeComponent();
             // 綁定事件
             cbSearch.SelectedIndexChanged += (s, e) => UpdateSearchButtonState();
             txtSearch.TextChanged += (s, e) => UpdateSearchButtonState();
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
         }
 
         // 檢查是否可以啟用 btnSearch
@@ -222,5 +234,26 @@ namespace Final_Project
             SearchBooks(); 
         }
 
+        // KeyDown 事件：檢測 Konami Code
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == konami[konamiIndex])
+            {
+                konamiIndex++;
+                if (konamiIndex >= konami.Length)
+                {
+                    konamiIndex = 0;
+                    // 顯示管理員登入介面
+                    using (var mgr = new Form6())
+                    {
+                        mgr.ShowDialog();
+                    }
+                }
+            }
+            else
+            {
+                konamiIndex = 0;
+            }
+        }
     }
 }

@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Final-Project", "Final-Project\Final-Project.csproj", "{E02E1B7C-B20D-4ADD-9F12-59B19E1C0B37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{2CC30950-7125-4610-A90C-FA94CAA4E525}"
-	ProjectSection(SolutionItems) = preProject
-		SqlQuery_1.sql = SqlQuery_1.sql
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
