@@ -24,8 +24,27 @@ namespace Final_Project
             this.bookName = bookName;
             this.engName = engName;
             this.currentUser = currentUser;
+            txtBookName.TextChanged += TextBox_AutoResize;
+            txtEnglishName.TextChanged += TextBox_AutoResize;
+            txtAuthor.TextChanged += TextBox_AutoResize;
+            txtPublisher.TextChanged += TextBox_AutoResize;
+            txtDate.TextChanged += TextBox_AutoResize;
+            txtISBN.TextChanged += TextBox_AutoResize;
         }
 
+        private void TextBox_AutoResize(object sender, EventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb == null) return;
+
+            // 用控制項的 Graphics 物件測量目前文字需要的大小
+            using (var g = tb.CreateGraphics())
+            {
+                var size = g.MeasureString(tb.Text, tb.Font);
+                // 加上一點 padding，避免文字太貼邊
+                tb.Width = (int)size.Width + 12;
+            }
+        }
         private void Form4_Load(object sender, EventArgs e)
         {
             // 查詢書籍其他欄位
@@ -39,17 +58,18 @@ namespace Final_Project
                 var reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    lblBookName1.Text = bookName;
-                    lblEnglishName1.Text = engName;
-                    lblAuthor1.Text = reader.GetString(0);
-                    lblPublisher1.Text = reader.GetString(1);
-                    lblDate1.Text = reader.GetDateTime(2).ToShortDateString();
-                    lblISBN1.Text = reader.GetString(3);
+                    txtBookName.Text = bookName;
+                    txtEnglishName.Text = engName;
+                    txtAuthor.Text = reader.GetString(0);
+                    txtPublisher.Text = reader.GetString(1);
+                    txtDate.Text = reader.GetDateTime(2).ToShortDateString();
+                    txtISBN.Text = reader.GetString(3);
                 }
             }
             if (!string.IsNullOrEmpty(currentUser))
                 ((Form1)Application.OpenForms["Form1"]).CheckHourAlerts();
         }
+
 
         private void btnBorrow_Click(object sender, EventArgs e)
         {
@@ -79,7 +99,7 @@ namespace Final_Project
                         }
                     }
                     // 新增借閱記錄: 設定到期時間 = 現在 + 6 天
-                    var endDate = DateTime.Now.AddDays(6);
+                    var endDate = DateTime.Now.AddHours(1);
                     using (var cmd = new SqlCommand(
                         "INSERT INTO BorrowBook (書名, 英文書名, 借閱人, 剩餘借閱時間) VALUES (@n, @e, @u, @end)", conn))
                     {

@@ -22,10 +22,22 @@ namespace Final_Project
         public Form1()
         {
             InitializeComponent();
+            // 綁定事件
+            cbSearch.SelectedIndexChanged += (s, e) => UpdateSearchButtonState();
+            txtSearch.TextChanged += (s, e) => UpdateSearchButtonState();
+        }
+
+        // 檢查是否可以啟用 btnSearch
+        private void UpdateSearchButtonState()
+        {
+            // cbSearch 一定有一個選項 (DropDownList)，只要 txtSearch 有輸入，就啟用
+            btnSearch.Enabled = cbSearch.SelectedIndex >= 0
+                             && !string.IsNullOrWhiteSpace(txtSearch.Text);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            btnSearch.Enabled = false;
             btnLogIn.Enabled = true;
             btnBorrowList.Enabled = true;
             LoadBooks(order: "ASC");
@@ -39,7 +51,7 @@ namespace Final_Project
             timerBorrow.Start();
             // 立即檢查一次
             CheckHourAlerts();
-            lvwBooks.Columns.Add("書名", 250);  
+            lvwBooks.Columns.Add("書名", 200);  
             lvwBooks.Columns.Add("英文書名", 300);  
         }
         private string CurrentOrder = "ASC";
@@ -50,11 +62,14 @@ namespace Final_Project
             var records = new List<(string Title, string Eng)>();
             int maxTitle = "書名".Length;
             int maxEng = "英文書名".Length;
+
+
             using (var conn = new SqlConnection(connString))
             using (var cmd = new SqlCommand(
                 $"SELECT 書名, 英文書名 FROM Basic ORDER BY 英文書名 {order}", conn))
             {
                 conn.Open();
+
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -67,12 +82,14 @@ namespace Final_Project
                     }
                 }
             }
+            lvwBooks.BeginUpdate();
             lvwBooks.Items.Clear();
+
             // 資料行
             foreach (var (Title, Eng) in records)
                 lvwBooks.Items.Add(new ListViewItem(new[] { Title, Eng }));
-        
-    }
+            lvwBooks.EndUpdate();
+        }
         private void AZToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             AZToolStripMenuItem1.Checked = true;
@@ -151,5 +168,59 @@ namespace Final_Project
                 }
             }
         }
+
+        // 查詢邏輯
+        private void SearchBooks()
+        {
+            string category = cbSearch.SelectedItem.ToString();
+            string keyword = txtSearch.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                LoadBooks(CurrentOrder);
+                return;
+            }
+            var records = new List<(string Title, string Eng)>();
+            string sql;
+            switch (category)
+            {
+                case "ISBN":
+                    sql = "SELECT 書名, 英文書名 FROM Basic WHERE ISBN = @p";
+                    break;
+                case "作者":
+                    sql = "SELECT 書名, 英文書名 FROM Basic WHERE 作者 LIKE @p ORDER BY 英文書名";
+                    break;
+                case "英文書名":
+                    sql = "SELECT 書名, 英文書名 FROM Basic WHERE 英文書名 LIKE @p ORDER BY 英文書名";
+                    break;
+                default:
+                    sql = "SELECT 書名, 英文書名 FROM Basic WHERE 書名 LIKE @p ORDER BY 英文書名";
+                    break;
+            }
+            using (var conn = new SqlConnection(connString))
+            using (var cmd = new SqlCommand(sql, conn))
+            {
+                if (category == "ISBN")
+                    cmd.Parameters.AddWithValue("@p", keyword);
+                else
+                    cmd.Parameters.AddWithValue("@p", "%" + keyword + "%");
+                conn.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        records.Add((reader.GetString(0), reader.GetString(1)));
+                }
+            }
+            lvwBooks.BeginUpdate();
+            lvwBooks.Items.Clear();
+            foreach (var (Title, Eng) in records)
+                lvwBooks.Items.Add(new ListViewItem(new[] { Title, Eng }));
+            lvwBooks.EndUpdate();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            SearchBooks(); 
+        }
+
     }
 }

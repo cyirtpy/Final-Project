@@ -17,11 +17,11 @@ namespace Final_Project
             @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
         private readonly string currentUser;
         private HashSet<string> alerted = new HashSet<string>(); // 已提醒一小時清單
-        private System.Windows.Forms.Timer timerBorrow;
         public Form5(string currentUser)
         {
             InitializeComponent();
             this.currentUser = currentUser;
+
         }
 
         private void Form5_Load(object sender, EventArgs e)
@@ -30,15 +30,11 @@ namespace Final_Project
             lvwBorrowList.Columns.Add("書名", 250);
             lvwBorrowList.Columns.Add("英文書名", 300);
             lvwBorrowList.Columns.Add("剩餘借閱時間", 120);
-            timerBorrow = new Timer();
-            timerBorrow.Interval = 60 * 60 * 1000; // 每分鐘檢查一次
-            timerBorrow.Tick += (s, ev) => LoadBorrowList();
-            timerBorrow.Start();
             if (!string.IsNullOrEmpty(currentUser))
                 ((Form1)Application.OpenForms["Form1"]).CheckHourAlerts();
-        
-    }
-
+            timerBorrow.Tick += (s, ev) => { LoadBorrowList(); };
+            timerBorrow.Start();
+        }
 
         private void LoadBorrowList()
         {
