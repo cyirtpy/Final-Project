@@ -99,7 +99,7 @@ namespace Final_Project
                         }
                     }
                     // 新增借閱記錄: 設定到期時間 = 現在 + 6 天
-                    var endDate = DateTime.Now.AddHours(1);
+                    var endDate = DateTime.Now.AddDays(6);
                     using (var cmd = new SqlCommand(
                         "INSERT INTO BorrowBook (書名, 英文書名, 借閱人, 剩餘借閱時間) VALUES (@n, @e, @u, @end)", conn))
                     {

@@ -21,7 +21,6 @@ namespace Final_Project
         {
             InitializeComponent();
             this.currentUser = currentUser;
-
         }
 
         private void Form5_Load(object sender, EventArgs e)
@@ -77,7 +76,7 @@ namespace Final_Project
                 bool isDayWarning = rem.TotalDays <= 1 && rem.TotalSeconds > 3600;
                 string txt;
                 if (rem.TotalSeconds <= 0) txt = "已逾期";
-                else if (isHourAlert) txt = rem.ToString(@"hh\:mm\:ss");
+                else if (isDayWarning) txt = rem.ToString(@"hh\:mm\:ss");
                 else txt = $"{(int)rem.TotalDays}天";
 
                 var item = new ListViewItem(new[] { Title, Eng, txt });
@@ -117,6 +116,11 @@ namespace Final_Project
                 MessageBox.Show("已成功還書!");
                 LoadBorrowList();
             }
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+                LoadBorrowList();
         }
     }
 }
