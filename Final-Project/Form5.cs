@@ -59,7 +59,7 @@ namespace Final_Project
                             maxTitle = Math.Max(maxTitle, t.Length);
                             maxEng = Math.Max(maxEng, eName.Length);
                             var rem = end - DateTime.Now;
-                            string txt = rem.TotalSeconds <= 3600 ? rem.ToString(@"hh\:mm\:ss") : $"{(int)rem.TotalDays}天";
+                            string txt = rem.TotalDays <= 1 ? rem.ToString(@"hh\:mm\:ss") : $"{(int)rem.TotalDays}天";
                             maxTime = Math.Max(maxTime, txt.Length);
                         }
                     }
@@ -73,14 +73,15 @@ namespace Final_Project
             {
                 var rem = End - DateTime.Now;
                 bool isHourAlert = rem.TotalSeconds <= 3600 && rem.TotalSeconds > 0;
-                bool isDayWarning = rem.TotalDays <= 1 && rem.TotalSeconds > 3600;
+                bool isDayWarning = rem.TotalDays <= 1 && rem.TotalSeconds > 0;
                 string txt;
                 if (rem.TotalSeconds <= 0) txt = "已逾期";
                 else if (isDayWarning) txt = rem.ToString(@"hh\:mm\:ss");
                 else txt = $"{(int)rem.TotalDays}天";
 
                 var item = new ListViewItem(new[] { Title, Eng, txt });
-                if (isDayWarning || isHourAlert) item.ForeColor = Color.Red;
+                if (rem.TotalSeconds <= 0 || isDayWarning || isHourAlert)
+                    item.ForeColor = Color.Red;
                 lvwBorrowList.Items.Add(item);
 
                 if (isHourAlert && !alerted.Contains(Title))

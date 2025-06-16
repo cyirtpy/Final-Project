@@ -44,6 +44,7 @@
             this.cbSearch = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.btnLogOut = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             // btnLogIn
             // 
             this.btnLogIn.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnLogIn.Location = new System.Drawing.Point(620, 445);
+            this.btnLogIn.Location = new System.Drawing.Point(569, 331);
             this.btnLogIn.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogIn.Name = "btnLogIn";
             this.btnLogIn.Size = new System.Drawing.Size(76, 54);
@@ -72,11 +73,11 @@
             // lblWelcome
             // 
             this.lblWelcome.AutoSize = true;
-            this.lblWelcome.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblWelcome.Location = new System.Drawing.Point(747, 29);
+            this.lblWelcome.Font = new System.Drawing.Font("Microsoft JhengHei", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblWelcome.Location = new System.Drawing.Point(564, 62);
             this.lblWelcome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(90, 24);
+            this.lblWelcome.Size = new System.Drawing.Size(110, 31);
             this.lblWelcome.TabIndex = 4;
             this.lblWelcome.Text = "                ";
             // 
@@ -181,11 +182,24 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
+            // btnLogOut
+            // 
+            this.btnLogOut.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnLogOut.Location = new System.Drawing.Point(569, 427);
+            this.btnLogOut.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLogOut.Name = "btnLogOut";
+            this.btnLogOut.Size = new System.Drawing.Size(76, 54);
+            this.btnLogOut.TabIndex = 11;
+            this.btnLogOut.Text = "登出";
+            this.btnLogOut.UseVisualStyleBackColor = true;
+            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(859, 537);
+            this.Controls.Add(this.btnLogOut);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.cbSearch);
@@ -222,6 +236,7 @@
         private System.Windows.Forms.ComboBox cbSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button btnLogOut;
     }
 }
 

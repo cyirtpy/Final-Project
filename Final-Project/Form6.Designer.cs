@@ -116,7 +116,7 @@
             this.Controls.Add(this.lblManagerAccount);
             this.Controls.Add(this.lblManagerLogIn);
             this.Name = "Form6";
-            this.Text = "Form6";
+            this.Text = "管理員登入";
             this.ResumeLayout(false);
             this.PerformLayout();
 

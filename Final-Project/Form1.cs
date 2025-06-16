@@ -51,6 +51,7 @@ namespace Final_Project
         {
             btnSearch.Enabled = false;
             btnLogIn.Enabled = true;
+            btnLogOut.Enabled = false;
             btnBorrowList.Enabled = true;
             LoadBooks(order: "ASC");
             // 設定每分鐘檢查與提醒
@@ -116,20 +117,7 @@ namespace Final_Project
             LoadBooks(order: "DESC");
         }
 
-        private void btnLogIn_Click(object sender, EventArgs e)
-        {
-            // 以對話方塊方式開啟 Form2
-            using (var loginForm = new Form2())
-            {
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                {
-                    // 從 Form2 拿回正確的 Username
-                    CurrentUser = loginForm.Username;
-                    lblWelcome.Text = $"歡迎 {CurrentUser}!";
-
-                }
-            }
-        }
+     
     
 
         private void lvwBooks_ItemActivate(object sender, EventArgs e)
@@ -254,6 +242,37 @@ namespace Final_Project
             {
                 konamiIndex = 0;
             }
+        }
+        private void btnLogIn_Click(object sender, EventArgs e)
+        {
+            // 以對話方塊方式開啟 Form2
+            using (var loginForm = new Form2())
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    CurrentUser = loginForm.Username;
+                    lblWelcome.Text = $"歡迎 {CurrentUser} !";
+
+                    btnLogIn.Enabled = false;
+                    btnLogOut.Enabled = true;
+
+                    // 鎖定 Konami Code 功能
+                    this.KeyDown -= Form1_KeyDown;
+                }
+            }
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            // 登出清除資訊
+            CurrentUser = null;
+            lblWelcome.Text = "";
+
+            btnLogIn.Enabled = true;
+            btnLogOut.Enabled = false;
+
+            // 重新啟用 Konami Code
+            this.KeyDown += Form1_KeyDown;
         }
     }
 }
