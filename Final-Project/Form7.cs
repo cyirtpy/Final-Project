@@ -41,5 +41,13 @@ namespace Final_Project
                 LoadBooksForManager();  // 更新
             }
         }
+
+        private void btnUserState_Click(object sender, EventArgs e)
+        {
+            using (var f9 = new Form9())
+            {
+                f9.ShowDialog();
+            }
+        }
     }
 }
