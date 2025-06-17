@@ -26,7 +26,7 @@ namespace Final_Project
         Keys.Down, Keys.Down,
         Keys.Left, Keys.Right,
         Keys.Left, Keys.Right,
-        Keys.A, Keys.B
+        Keys.B, Keys.A
     };
         private int konamiIndex = 0;
         public Form1()
@@ -64,8 +64,8 @@ namespace Final_Project
             timerBorrow.Start();
             // 立即檢查一次
             CheckHourAlerts();
-            lvwBooks.Columns.Add("書名", 200);  
-            lvwBooks.Columns.Add("英文書名", 300);  
+            lvwBooks.Columns.Add("書名", 200);
+            lvwBooks.Columns.Add("英文書名", 300);
         }
         private string CurrentOrder = "ASC";
         private void LoadBooks(string order)
@@ -117,8 +117,8 @@ namespace Final_Project
             LoadBooks(order: "DESC");
         }
 
-     
-    
+
+
 
         private void lvwBooks_ItemActivate(object sender, EventArgs e)
         {
@@ -219,7 +219,7 @@ namespace Final_Project
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            SearchBooks(); 
+            SearchBooks();
         }
 
         // KeyDown 事件：檢測 Konami Code
