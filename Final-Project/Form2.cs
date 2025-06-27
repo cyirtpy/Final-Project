@@ -14,9 +14,9 @@ namespace Final_Project
 {
     public partial class Form2 : Form
     {
-        private readonly string connString =
-            @"Data Source=(localDB)\MSSQLLocalDB;AttachDBFilename=|DataDirectory|Database2.mdf;";
-        public string Username { get; private set; }
+        string connString =
+            @"Data Source=(localDB)\MSSQLLocalDB;AttachDBFilename=|DataDirectory|\Database.mdf;";
+        public string Username { get; set; }
         public Form2()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace Final_Project
         }
 
 
-        private void btnLogInAccount_Click(object sender, EventArgs e)
+        void btnLogInAccount_Click(object sender, EventArgs e)
         {
             string user = txtUsername.Text.Trim();
             string pwd = txtPassword.Text;
@@ -55,7 +55,7 @@ namespace Final_Project
             this.Close();
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        void btnRegister_Click(object sender, EventArgs e)
         {
             // 開啟註冊畫面
             using (var regForm = new Form3())

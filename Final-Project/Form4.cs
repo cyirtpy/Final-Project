@@ -13,11 +13,11 @@ namespace Final_Project
 {
     public partial class Form4 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
-        private readonly string bookName;
-        private readonly string engName;
-        private readonly string currentUser;
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
+        string bookName;
+        string engName;
+        string currentUser;
         public Form4(string bookName, string engName, string currentUser)
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Final_Project
             txtISBN.TextChanged += TextBox_AutoResize;
         }
 
-        private void TextBox_AutoResize(object sender, EventArgs e)
+        void TextBox_AutoResize(object sender, EventArgs e)
         {
             var tb = sender as TextBox;
             if (tb == null) return;
@@ -45,7 +45,7 @@ namespace Final_Project
                 tb.Width = (int)size.Width + 12;
             }
         }
-        private void Form4_Load(object sender, EventArgs e)
+        void Form4_Load(object sender, EventArgs e)
         {
             // 查詢書籍其他欄位
             using (var conn = new SqlConnection(connString))
@@ -71,7 +71,7 @@ namespace Final_Project
         }
 
 
-        private void btnBorrow_Click(object sender, EventArgs e)
+        void btnBorrow_Click(object sender, EventArgs e)
         {
             {
                 if (string.IsNullOrEmpty(currentUser))

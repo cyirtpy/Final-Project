@@ -13,14 +13,14 @@ namespace Final_Project
 {
     public partial class Form7 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
         public Form7()
         {
             InitializeComponent();
             LoadBooksForManager();
         }
-        private void LoadBooksForManager()
+        void LoadBooksForManager()
         {
             using (var conn = new SqlConnection(connString))
             using (var adapter = new SqlDataAdapter(
@@ -31,7 +31,7 @@ namespace Final_Project
                 dgvManager.DataSource = dt;
             }
         }
-        private void btnBooksEdit_Click(object sender, EventArgs e)
+        void btnBooksEdit_Click(object sender, EventArgs e)
         {
             using (var frm8 = new Form8())
             {
@@ -42,7 +42,7 @@ namespace Final_Project
             }
         }
 
-        private void btnUserState_Click(object sender, EventArgs e)
+        void btnUserState_Click(object sender, EventArgs e)
         {
             using (var f9 = new Form9())
             {

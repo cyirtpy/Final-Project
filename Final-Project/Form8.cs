@@ -13,8 +13,8 @@ namespace Final_Project
 {
     public partial class Form8 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
         public Form8()
         {
             InitializeComponent();
@@ -40,19 +40,23 @@ namespace Final_Project
         }
 
         // 模式切換時開關欄位並檢查按鈕
-        private void ModeChanged(object sender, EventArgs e)
+        void ModeChanged(object sender, EventArgs e)
         {
             ApplyMode();
             UpdateEditButtonState();
+            if (rbAdd.Checked)
+                btnEditBook.Text = "新增資料";
+            else if (rbDelete.Checked)
+                btnEditBook.Text = "刪除資料";
         }
 
         // 欄位或模式改變時檢查按鈕
-        private void FieldsOrModeChanged(object sender, EventArgs e)
+        void FieldsOrModeChanged(object sender, EventArgs e)
         {
             UpdateEditButtonState();
         }
 
-        private void ApplyMode()
+        void ApplyMode()
         {
             bool isAdd = rbAdd.Checked;
             // 新增時：所有欄位可用
@@ -76,7 +80,7 @@ namespace Final_Project
             }
         }
 
-        private void UpdateEditButtonState()
+        void UpdateEditButtonState()
         {
             bool enable = false;
             using (var conn = new SqlConnection(connString))
@@ -150,19 +154,19 @@ WHERE 書名=@n AND 英文書名=@e";
         }
 
         // 限制只能輸入數字
-        private void NumericOnly_KeyPress(object sender, KeyPressEventArgs e)
+        void NumericOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 e.Handled = true;
         }
 
         // 限制輸入長度、綁定數字檢查與日期修正事件
-        private void SetupNumericFields()
+        void SetupNumericFields()
         {
             txtEditYear.MaxLength = 4;
             txtEditMonth.MaxLength = 2;
             txtEditDay.MaxLength = 2;
-            txtEditISBN.MaxLength = 12;
+            txtEditISBN.MaxLength = 13;
 
             txtEditYear.KeyPress += NumericOnly_KeyPress;
             txtEditMonth.KeyPress += NumericOnly_KeyPress;
@@ -174,10 +178,10 @@ WHERE 書名=@n AND 英文書名=@e";
             txtEditDay.Leave += DatePart_Leave;
         }
 
-        private static readonly DateTime MinSqlDate = new DateTime(1753, 1, 1);
-        private static readonly DateTime MaxSqlDate = new DateTime(9999, 12, 31);
+        static readonly DateTime MinSqlDate = new DateTime(1753, 1, 1);
+        static readonly DateTime MaxSqlDate = new DateTime(9999, 12, 31);
 
-        private void DatePart_Leave(object sender, EventArgs e)
+        void DatePart_Leave(object sender, EventArgs e)
         {
             int y, m, d;
 
@@ -207,7 +211,7 @@ WHERE 書名=@n AND 英文書名=@e";
             txtEditDay.Text = result.Day.ToString("00");
         }
 
-        private void btnEditBook_Click(object sender, EventArgs e)
+        void btnEditBook_Click(object sender, EventArgs e)
             {
                 if (rbAdd.Checked)
                 {

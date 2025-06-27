@@ -15,12 +15,12 @@ namespace Final_Project
 {
     public partial class Form1 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Database2;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
         public string CurrentUser { get; private set; }
 
         // Konami Code 序列
-        private readonly Keys[] konami = new[]
+        private Keys[] konami = new[]
         {
         Keys.Up, Keys.Up,
         Keys.Down, Keys.Down,
@@ -40,14 +40,14 @@ namespace Final_Project
         }
 
         // 檢查是否可以啟用 btnSearch
-        private void UpdateSearchButtonState()
+        void UpdateSearchButtonState()
         {
             // cbSearch 一定有一個選項 (DropDownList)，只要 txtSearch 有輸入，就啟用
             btnSearch.Enabled = cbSearch.SelectedIndex >= 0
                              && !string.IsNullOrWhiteSpace(txtSearch.Text);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        void Form1_Load(object sender, EventArgs e)
         {
             btnSearch.Enabled = false;
             btnLogIn.Enabled = true;
@@ -67,8 +67,8 @@ namespace Final_Project
             lvwBooks.Columns.Add("書名", 200);
             lvwBooks.Columns.Add("英文書名", 300);
         }
-        private string CurrentOrder = "ASC";
-        private void LoadBooks(string order)
+        string CurrentOrder = "ASC";
+        void LoadBooks(string order)
         {
             CurrentOrder = order;
             // 先取得所有資料到暫存
@@ -103,14 +103,14 @@ namespace Final_Project
                 lvwBooks.Items.Add(new ListViewItem(new[] { Title, Eng }));
             lvwBooks.EndUpdate();
         }
-        private void AZToolStripMenuItem1_Click(object sender, EventArgs e)
+        void AZToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             AZToolStripMenuItem1.Checked = true;
             ZAToolStripMenuItem1.Checked = false;
             LoadBooks(order: "ASC");
         }
 
-        private void ZAToolStripMenuItem1_Click(object sender, EventArgs e)
+        void ZAToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             AZToolStripMenuItem1.Checked = false;
             ZAToolStripMenuItem1.Checked = true;
@@ -120,7 +120,7 @@ namespace Final_Project
 
 
 
-        private void lvwBooks_ItemActivate(object sender, EventArgs e)
+        void lvwBooks_ItemActivate(object sender, EventArgs e)
         {
             if (lvwBooks.SelectedItems.Count == 0) return;
             var item = lvwBooks.SelectedItems[0];
@@ -129,7 +129,7 @@ namespace Final_Project
                 frm.ShowDialog();
         }
 
-        private void btnBorrowList_Click(object sender, EventArgs e)
+        void btnBorrowList_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(CurrentUser))
             {
@@ -161,7 +161,7 @@ namespace Final_Project
                         var rem = end - DateTime.Now;
                         if (rem.TotalSeconds <= 3600 && rem.TotalSeconds > 0 && !Program.AlertedBooks.Contains(title))
                         {
-                            MessageBox.Show($"{title} 借閱時間剩餘1小時，請盡快還書!");
+                            MessageBox.Show($"{title} 即將逾期，請盡快還書!");
                             Program.AlertedBooks.Add(title);
                         }
                     }
@@ -170,7 +170,7 @@ namespace Final_Project
         }
 
         // 查詢邏輯
-        private void SearchBooks()
+        void SearchBooks()
         {
             string category = cbSearch.SelectedItem.ToString();
             string keyword = txtSearch.Text.Trim();
@@ -217,13 +217,13 @@ namespace Final_Project
             lvwBooks.EndUpdate();
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        void btnSearch_Click(object sender, EventArgs e)
         {
             SearchBooks();
         }
 
         // KeyDown 事件：檢測 Konami Code
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == konami[konamiIndex])
             {
@@ -243,7 +243,7 @@ namespace Final_Project
                 konamiIndex = 0;
             }
         }
-        private void btnLogIn_Click(object sender, EventArgs e)
+        void btnLogIn_Click(object sender, EventArgs e)
         {
             // 以對話方塊方式開啟 Form2
             using (var loginForm = new Form2())
@@ -262,8 +262,8 @@ namespace Final_Project
             }
         }
 
-        private void btnLogOut_Click(object sender, EventArgs e)
-        {
+        void btnLogOut_Click(object sender, EventArgs e)
+            {
             // 登出清除資訊
             CurrentUser = null;
             lblWelcome.Text = "";
