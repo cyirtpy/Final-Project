@@ -6,12 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Final-Project", "Final-Project\Final-Project.csproj", "{E02E1B7C-B20D-4ADD-9F12-59B19E1C0B37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{2CC30950-7125-4610-A90C-FA94CAA4E525}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Desktop\說明.docx = ..\..\..\Desktop\說明.docx
-		..\..\..\Desktop\說明書.pdf = ..\..\..\Desktop\說明書.pdf
-	EndProjectSection
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +17,6 @@ Global
 		{E02E1B7C-B20D-4ADD-9F12-59B19E1C0B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E02E1B7C-B20D-4ADD-9F12-59B19E1C0B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E02E1B7C-B20D-4ADD-9F12-59B19E1C0B37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Debug|Any CPU.ActiveCfg = Debug
-		{DBE9999D-346E-CA63-6964-F3B7FC1D42B4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

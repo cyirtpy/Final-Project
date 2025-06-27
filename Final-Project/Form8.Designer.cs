@@ -210,15 +210,14 @@
             // 
             // btnEditBook
             // 
-            this.btnEditBook.BackColor = System.Drawing.Color.LightSalmon;
             this.btnEditBook.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnEditBook.Location = new System.Drawing.Point(302, 390);
             this.btnEditBook.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnEditBook.Name = "btnEditBook";
             this.btnEditBook.Size = new System.Drawing.Size(94, 40);
             this.btnEditBook.TabIndex = 19;
-            this.btnEditBook.Text = "新增資料";
-            this.btnEditBook.UseVisualStyleBackColor = false;
+            this.btnEditBook.Text = "修改資料";
+            this.btnEditBook.UseVisualStyleBackColor = true;
             this.btnEditBook.Click += new System.EventHandler(this.btnEditBook_Click);
             // 
             // rbAdd
@@ -251,7 +250,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Bisque;
             this.ClientSize = new System.Drawing.Size(662, 450);
             this.Controls.Add(this.rbDelete);
             this.Controls.Add(this.rbAdd);

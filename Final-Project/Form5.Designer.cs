@@ -51,7 +51,7 @@
             this.lvwBorrowList.Font = new System.Drawing.Font("Microsoft JhengHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lvwBorrowList.HideSelection = false;
             this.lvwBorrowList.Location = new System.Drawing.Point(56, 116);
-            this.lvwBorrowList.Margin = new System.Windows.Forms.Padding(4);
+            this.lvwBorrowList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.lvwBorrowList.Name = "lvwBorrowList";
             this.lvwBorrowList.Size = new System.Drawing.Size(894, 353);
             this.lvwBorrowList.TabIndex = 1;
@@ -65,29 +65,26 @@
             // 
             // btnReload
             // 
-            this.btnReload.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.btnReload.Font = new System.Drawing.Font("Microsoft JhengHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnReload.Location = new System.Drawing.Point(273, 32);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(128, 55);
             this.btnReload.TabIndex = 2;
             this.btnReload.Text = "重新整理";
-            this.btnReload.UseVisualStyleBackColor = false;
+            this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1067, 562);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.lvwBorrowList);
             this.Controls.Add(this.lblBorrowList);
-            this.ForeColor = System.Drawing.Color.Black;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form5";
-            this.Text = "借書清單";
+            this.Text = "重新整理";
             this.Load += new System.EventHandler(this.Form5_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

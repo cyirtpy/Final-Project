@@ -14,8 +14,8 @@ namespace Final_Project
 {
     public partial class Form3 : Form
     {
-        string connString =
-               @"Data Source=(localDB)\MSSQLLocalDB;AttachDBFilename=|DataDirectory|\Database.mdf;";
+        private readonly string connString =
+               @"Data Source=(localDB)\MSSQLLocalDB;AttachDBFilename=|DataDirectory|Database2.mdf;";
         public Form3()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace Final_Project
             txtRegisterPassword.UseSystemPasswordChar = true;
             txtRegisterPasswordCheck.UseSystemPasswordChar = true;
         }
-        void Fields_TextChanged(object sender, EventArgs e)
+        private void Fields_TextChanged(object sender, EventArgs e)
         {
             btnRegisterAccount.Enabled =
                          !string.IsNullOrEmpty(txtRegisterUsername.Text.Trim()) &&
@@ -37,7 +37,7 @@ namespace Final_Project
 
 
 
-        void btnRegisterAccount_Click(object sender, EventArgs e)
+        private void btnRegisterAccount_Click(object sender, EventArgs e)
         {
             string user = txtRegisterUsername.Text.Trim();
             string pwd = txtRegisterPassword.Text;

@@ -13,8 +13,8 @@ namespace Final_Project
 {
     public partial class Form6 : Form
     {
-        string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
+        private readonly string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
         public Form6()
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace Final_Project
             txtManagerPassword.UseSystemPasswordChar = true;
         }
 
-        void btnManagerLogIn_Click(object sender, EventArgs e)
+        private void btnManagerLogIn_Click(object sender, EventArgs e)
         {
             string mgr = txtManagerAccount.Text.Trim();
             string pwd = txtManagerPassword.Text;

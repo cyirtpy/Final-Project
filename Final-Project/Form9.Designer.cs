@@ -72,7 +72,7 @@
             this.checkbEditTime.AutoSize = true;
             this.checkbEditTime.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.checkbEditTime.Location = new System.Drawing.Point(667, 55);
-            this.checkbEditTime.Margin = new System.Windows.Forms.Padding(4);
+            this.checkbEditTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkbEditTime.Name = "checkbEditTime";
             this.checkbEditTime.Size = new System.Drawing.Size(180, 35);
             this.checkbEditTime.TabIndex = 2;
@@ -95,7 +95,7 @@
             // 
             this.txtEditDay.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtEditDay.Location = new System.Drawing.Point(751, 114);
-            this.txtEditDay.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEditDay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEditDay.Name = "txtEditDay";
             this.txtEditDay.Size = new System.Drawing.Size(105, 39);
             this.txtEditDay.TabIndex = 4;
@@ -104,7 +104,7 @@
             // 
             this.txtEditHour.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtEditHour.Location = new System.Drawing.Point(751, 168);
-            this.txtEditHour.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEditHour.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEditHour.Name = "txtEditHour";
             this.txtEditHour.Size = new System.Drawing.Size(105, 39);
             this.txtEditHour.TabIndex = 6;
@@ -124,7 +124,7 @@
             // 
             this.txtEditMinute.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtEditMinute.Location = new System.Drawing.Point(751, 229);
-            this.txtEditMinute.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEditMinute.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEditMinute.Name = "txtEditMinute";
             this.txtEditMinute.Size = new System.Drawing.Size(105, 39);
             this.txtEditMinute.TabIndex = 8;
@@ -144,7 +144,7 @@
             // 
             this.txtEditSecond.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.txtEditSecond.Location = new System.Drawing.Point(751, 289);
-            this.txtEditSecond.Margin = new System.Windows.Forms.Padding(4);
+            this.txtEditSecond.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEditSecond.Name = "txtEditSecond";
             this.txtEditSecond.Size = new System.Drawing.Size(105, 39);
             this.txtEditSecond.TabIndex = 10;
@@ -162,22 +162,20 @@
             // 
             // btnEditData
             // 
-            this.btnEditData.BackColor = System.Drawing.Color.LightSalmon;
             this.btnEditData.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnEditData.Location = new System.Drawing.Point(709, 380);
-            this.btnEditData.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEditData.Name = "btnEditData";
             this.btnEditData.Size = new System.Drawing.Size(148, 55);
             this.btnEditData.TabIndex = 11;
             this.btnEditData.Text = "更改資料";
-            this.btnEditData.UseVisualStyleBackColor = false;
+            this.btnEditData.UseVisualStyleBackColor = true;
             this.btnEditData.Click += new System.EventHandler(this.btnEditData_Click);
             // 
             // Form9
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Bisque;
             this.ClientSize = new System.Drawing.Size(1053, 461);
             this.Controls.Add(this.btnEditData);
             this.Controls.Add(this.txtEditSecond);
