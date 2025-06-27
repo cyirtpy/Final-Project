@@ -13,8 +13,8 @@ namespace Final_Project
 {
     public partial class Form9 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
         private int selectedRowIndex = -1;
         public Form9()
         {
@@ -29,13 +29,13 @@ namespace Final_Project
 
         }
 
-        private void Form9_Load(object sender, EventArgs e)
+        void Form9_Load(object sender, EventArgs e)
         {
             LoadUserState(); 
             timerUserState.Start();
         }
 
-        private void LoadUserState()
+        void LoadUserState()
         {
             if (checkbEditTime.Checked) return; // 編輯中暫停更新
 
@@ -79,7 +79,7 @@ namespace Final_Project
             selectedRowIndex = -1;
             btnEditData.Enabled = false;
         }
-        private void checkbEditTime_CheckedChanged(object sender, EventArgs e)
+        void checkbEditTime_CheckedChanged(object sender, EventArgs e)
         {
             bool edit = checkbEditTime.Checked;
             if (edit) timerUserState.Stop();
@@ -95,7 +95,7 @@ namespace Final_Project
             // 清空欄位
             txtEditDay.Text = txtEditHour.Text = txtEditMinute.Text = txtEditSecond.Text = "";
         }
-        private void dgvUserState_CellClick(object sender, DataGridViewCellEventArgs e)
+        void dgvUserState_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!checkbEditTime.Checked) return;
             if (e.RowIndex < 0) return;
@@ -119,7 +119,7 @@ namespace Final_Project
         }
 
         // 任一編輯欄位變動後，決定按鈕狀態與欄位鎖定
-        private void EditField_TextChanged(object sender, EventArgs e)
+        void EditField_TextChanged(object sender, EventArgs e)
         {
             // 如果日有值，鎖定時分秒；反之時分秒任一有值，鎖定日
             bool hasDay = !string.IsNullOrWhiteSpace(txtEditDay.Text);
@@ -136,7 +136,7 @@ namespace Final_Project
             UpdateEditButtonState();
         }
 
-        private void UpdateEditButtonState()
+        void UpdateEditButtonState()
         {
             // 需同時：已選列 + (日 或 (時分秒皆有))
             bool dayOK = !string.IsNullOrWhiteSpace(txtEditDay.Text);
@@ -151,7 +151,7 @@ namespace Final_Project
         }
 
         // 確定寫回資料庫
-        private void btnEditData_Click(object sender, EventArgs e)
+        void btnEditData_Click(object sender, EventArgs e)
         {
             if (selectedRowIndex < 0) return;
             // 取得主索引：書名、英文書名、借閱人

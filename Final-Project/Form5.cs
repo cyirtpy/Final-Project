@@ -13,17 +13,17 @@ namespace Final_Project
 {
     public partial class Form5 : Form
     {
-        private readonly string connString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database2.mdf;Integrated Security=True;";
-        private readonly string currentUser;
-        private HashSet<string> alerted = new HashSet<string>(); // 已提醒一小時清單
+        string connString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database.mdf;";
+        string currentUser;
+        HashSet<string> alerted = new HashSet<string>(); // 已提醒一小時清單
         public Form5(string currentUser)
         {
             InitializeComponent();
             this.currentUser = currentUser;
         }
 
-        private void Form5_Load(object sender, EventArgs e)
+        void Form5_Load(object sender, EventArgs e)
         {
             LoadBorrowList();
             lvwBorrowList.Columns.Add("書名", 250);
@@ -35,7 +35,7 @@ namespace Final_Project
             timerBorrow.Start();
         }
 
-        private void LoadBorrowList()
+        void LoadBorrowList()
         {
             var list = new List<(string Title, string Eng, DateTime End)>();
             int maxTitle = "書名".Length;
@@ -83,17 +83,11 @@ namespace Final_Project
                 if (rem.TotalSeconds <= 0 || isDayWarning || isHourAlert)
                     item.ForeColor = Color.Red;
                 lvwBorrowList.Items.Add(item);
-
-                if (isHourAlert && !alerted.Contains(Title))
-                {
-                    MessageBox.Show($"{Title} 借閱時間剩餘1小時，請盡快還書!");
-                    alerted.Add(Title);
-                }
             }
             lvwBorrowList.EndUpdate();
         }
 
-        private void lvwBorrowList_ItemActivate(object sender, EventArgs e)
+        void lvwBorrowList_ItemActivate(object sender, EventArgs e)
         {
             if (lvwBorrowList.SelectedItems.Count == 0) return;
             var itm = lvwBorrowList.SelectedItems[0];
@@ -119,7 +113,7 @@ namespace Final_Project
             }
         }
 
-        private void btnReload_Click(object sender, EventArgs e)
+        void btnReload_Click(object sender, EventArgs e)
         {
                 LoadBorrowList();
         }
